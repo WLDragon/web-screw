@@ -10,18 +10,14 @@ function check(id) {
 	//长度15或18，必须是数字或最后一位是X
 	if(!/(^\d{15}$)|(^\d{17}(\d|X)$)/.test(id)) return false;
 
-	//把15位转为18位，最后一位为校验位，15位的号码不需要校验
-	if(id.length == 15) {
-		var ids = id.split('');
-		ids.splice(6, 0, '1', '9'); //splice返回的是被删除的无素，不能连缀操作
-		id = ids.join('') + '#';
-	}
+	//把15位转为17位，最后一位为校验位，15位的号码不需要校验
+	if(id.length == 15) id = id.substring(0,6) + '19' + id.substring(6);
 
 	//拆分，提取号码信息
-	var chips = id.match(/^(\d{2})(\d{4})(\d{4})(\d{2})(\d{2})(\d{3})(\d|X|#)$/);
+	var chips = id.match(/^(\d{2})(\d{4})(\d{4})(\d{2})(\d{2})(\d{3})(\d|X)?$/);
 	var area = chips[1] * 1;
 	var year = chips[3];
-	var month = chips[4];
+	var month = chips[4] - 1;
 	var date = chips[5];
 	var code = chips[7];
 
@@ -29,10 +25,11 @@ function check(id) {
 	if([11,12,13,14,15,21,22,23,31,32,33,34,35,36,37,41,42,43,44,45,46,50,51,52,53,54,61,62,63,64,65,71,81,82].indexOf(area) === -1) return false;
 
 	//校验生日合法性
-	if(new Date(year, month, date).getDate() != date) return false;
+	var dateObj = new Date(year, month, date);
+	if(dateObj.getDate() != date || dateObj.getMonth() != month) return false;
 
 	//15位号码跳过校验位
-	if(code === '#') return true;
+	if(!code) return true;
 
 	//校验校验位
 	var x = ['1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'];
