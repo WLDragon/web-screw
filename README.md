@@ -7,6 +7,7 @@
 
 3. router.js 简易前端路由
 
-4.文本前后对齐
-  text-align: justify;
-  text-align-last: justify;
+4. 文本前后对齐
+
+  - text-align: justify;
+  - text-align-last: justify;
