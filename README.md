@@ -6,3 +6,7 @@
 2. pagination 简单的分页
 
 3. router.js 简易前端路由
+
+4.文本前后对齐
+  text-align: justify;
+  text-align-last: justify;
