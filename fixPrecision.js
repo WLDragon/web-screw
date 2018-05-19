@@ -41,7 +41,7 @@ function fixPrecision(a, operator, b) {
         a = scale(n1, maxLength, times)
         b = scale(n2, maxLength, times)
     }
-    
+
     switch (operator) {
         case '+':
             return (a + b) / times
@@ -54,4 +54,21 @@ function fixPrecision(a, operator, b) {
         default:
             throw new Error('no such operator "' + operator + '"')
     }
+}
+
+/**给Number的原型添加方法 */
+Number.prototype.add = function (value) {
+    return fixPrecision(Number(this), '+', value)
+}
+
+Number.prototype.sub = function (value) {
+    return fixPrecision(Number(this), '-', value)
+}
+
+Number.prototype.mul = function (value) {
+    return fixPrecision(Number(this), '*', value)
+}
+
+Number.prototype.div = function (value) {
+    return fixPrecision(Number(this), '/', value)
 }
